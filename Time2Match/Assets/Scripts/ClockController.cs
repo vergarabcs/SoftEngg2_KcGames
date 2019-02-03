@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class ClockController : MonoBehaviour {
     public int minute;
     public LineRenderer line;
     public bool isDrawingState;
+    public GameObject redGlow;
+    public GameObject greenGlow;
 
     private void Awake()
     {
@@ -62,5 +65,25 @@ public class ClockController : MonoBehaviour {
     void OnMouseDrag()
     {
        
+    }
+
+    internal void showMark(bool isCorrect)
+    {
+        if (isCorrect)
+        {
+            redGlow.active = false;
+            greenGlow.active = true;
+        }
+        else
+        {
+            greenGlow.active = false;
+            redGlow.active = true;
+        }
+    }
+
+    internal void ClearMark()
+    {
+        greenGlow.active = false;
+        redGlow.active = false;
     }
 }

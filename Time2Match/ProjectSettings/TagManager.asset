@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Clock
   - Choice
+  - Submit
   layers:
   - Default
   - TransparentFX

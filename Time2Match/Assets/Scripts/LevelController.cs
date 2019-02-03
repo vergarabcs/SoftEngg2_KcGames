@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour {
     private static float Y_RANGE = 3.0f; // vertically, clocks will be at -Y_RANGE to Y_RANGE
-    private static float CHOICE_X = 7.0f;
+    private static float CHOICE_X = 4.0f;
+    private static float QUESTION_X = -3.0f;
     private static float CHOICE_Y_DECREMENT = 2.0f*Y_RANGE/3.0f;
-    private static float FEEDBACK_DELAY = 1.5f;
+    private static float FEEDBACK_DELAY = 0.5f;
 
     public Button botRightBtn;
     public Text answerFeedback;
@@ -23,13 +25,20 @@ public class LevelController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         dc = GameObject.FindObjectOfType<DataController>();
-        q = dc.getCurrentQuestion();
-        //q = (new QuestionGenerator()).generateQuestion(4);
+        //q = dc.getCurrentQuestion();
+        q = (new QuestionGenerator()).generateQuestion(4);
         Test();
-
+        if (dc.isInstruction)
+        {
+            ActivateInstruction();
+        }
         answerFeedback.enabled = false;
 	}
 
+    private void ActivateInstruction()
+    {
+        
+    }
 
     void Test()
     {
@@ -37,7 +46,7 @@ public class LevelController : MonoBehaviour {
         for(int i=0; i<q.clocks.Length-1; i++)
         {
             DateTime time = q.clocks[i];
-            GameObject instance = Instantiate(clockPrefab, new Vector3(0.0f, start), Quaternion.identity);
+            GameObject instance = Instantiate(clockPrefab, new Vector3(QUESTION_X, start), Quaternion.identity);
             ClockController cc = instance.GetComponent("ClockController") as ClockController;
             clockControllers.Add(cc);
             cc.SetTime(time.Hour, time.Minute);
@@ -57,23 +66,13 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    private bool hasClicked = false;
-    public void CheckAnswer()
+    public bool CheckAnswer()
     {
         botRightBtn.gameObject.SetActive(false);
-        Text txt = botRightBtn.GetComponentInChildren<Text>();
-        txt.text = "NEXT";
-        if (hasClicked)
-        {
-            dc.DidAnswer(isCorrect);
-            return;
-        }
-
-        hasClicked = true;
         if (matchMade.Count != clockControllers.Count)
         {
             ShowAnswer(false);
-            return;
+            return false;
         }
         foreach(ClockController cc1 in matchMade.Keys)
         {
@@ -81,10 +80,11 @@ public class LevelController : MonoBehaviour {
             if(!(cc1.hour==cc2.hour && cc1.minute == cc2.minute))
             {
                 ShowAnswer(false);
-                return;
+                return false;
             }
         }
         ShowAnswer(true);
+        return true;
     }
 
     internal void unMatch(ClockController clockController)
@@ -99,6 +99,7 @@ public class LevelController : MonoBehaviour {
         this.isCorrect = isCorrect;
         print("isCorrect: " + isCorrect.ToString());
         DisableInput();
+        ShowMarks();
         StoreCorrectMappingToDict();
         //todo: show correct answer
         if (!isCorrect) WrongAnimation();
@@ -112,6 +113,7 @@ public class LevelController : MonoBehaviour {
 
     private void StoreCorrectMappingToDict()
     {
+        matchMade.Clear();
         foreach(ClockController clockC in clockControllers)
         {
             foreach(ChoiceController choiceC in choiceControllers)
@@ -121,10 +123,7 @@ public class LevelController : MonoBehaviour {
             }
         }
     }
-
-   
-
-
+    
     private void CorrectAnimation()
     {
         foreach(ClockController clockC in matchMade.Keys)
@@ -135,7 +134,9 @@ public class LevelController : MonoBehaviour {
             clockC.line.SetPosition(1, choiceC.radioButton.position);
         }
         answerFeedback.enabled = true;
-        answerFeedback.text = "CORRECT!";
+        //answerFeedback.text = "CORRECT!";
+        answerFeedback.text = "";
+        ShowMarks();
         Invoke("reenableButton", FEEDBACK_DELAY);
     }
 
@@ -146,9 +147,42 @@ public class LevelController : MonoBehaviour {
 
     private void WrongAnimation()
     {
+        
         answerFeedback.enabled = true;
-        answerFeedback.text = "WRONG!";
+        //answerFeedback.text = "WRONG!";
+        answerFeedback.text = "";
         Invoke("CorrectAnimation", FEEDBACK_DELAY);
+    }
+
+    private void ShowMarks()
+    {
+        ClearMarks();
+        foreach (ClockController clockC in clockControllers)
+        {
+            if (matchMade.ContainsKey(clockC))
+            {
+                ChoiceController choiceC = matchMade[clockC];
+                bool isCorrect = clockC.hour == choiceC.hour && clockC.minute == choiceC.minute;
+                choiceC.showMark(isCorrect);
+                clockC.showMark(isCorrect);
+            }
+            else
+            {
+                clockC.showMark(false);
+            }
+        }
+    }
+
+    private void ClearMarks()
+    {
+        foreach (ClockController clockC in clockControllers)
+        {
+            clockC.ClearMark();
+        }
+        foreach(ChoiceController choiceC in choiceControllers)
+        {
+            choiceC.ClearMark();
+        }
     }
 
     internal void Match(ChoiceController cc, ClockController clockController)
@@ -161,5 +195,10 @@ public class LevelController : MonoBehaviour {
         {
             matchMade.Add(clockController, cc);
         }
+    }
+
+    public void backToMainMenu()
+    {
+        SceneManager.LoadScene("MenuScreen");
     }
 }
