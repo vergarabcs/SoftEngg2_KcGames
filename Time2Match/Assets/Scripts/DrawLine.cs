@@ -12,6 +12,7 @@ public class DrawLine : MonoBehaviour
     //number of lines drawn
     private int currLines = 0;
     private ClockController clockController;
+    public GameObject particlePrefab;
 
     public Vector3 startPos;
     public Vector3 endPos;

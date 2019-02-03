@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 212382286455620010}
   - component: {fileID: 114475627810429966}
   - component: {fileID: 58253742394956106}
+  - component: {fileID: 58585518790157914}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Clock
@@ -86,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4078421748028402}
   - component: {fileID: 212325704872667878}
+  - component: {fileID: 114283693242219040}
   m_Layer: 0
   m_Name: redGlow
   m_TagString: Untagged
@@ -118,6 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4843857141287496}
   - component: {fileID: 212084486653896712}
+  - component: {fileID: 114140147229364274}
   m_Layer: 0
   m_Name: greenGlow
   m_TagString: Untagged
@@ -237,6 +240,45 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.9
+--- !u!58 &58585518790157914
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1536610985508130}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 5.677784, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8505312
+--- !u!114 &114140147229364274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865946763640784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b01880b77e3b14483f371e35329bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotSpeed: 1
+--- !u!114 &114283693242219040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697774999208444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b01880b77e3b14483f371e35329bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotSpeed: 1
 --- !u!114 &114475627810429966
 MonoBehaviour:
   m_ObjectHideFlags: 1

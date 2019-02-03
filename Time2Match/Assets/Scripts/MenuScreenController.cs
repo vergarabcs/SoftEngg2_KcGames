@@ -38,4 +38,9 @@ public class MenuScreenController : MonoBehaviour
     {
         SceneManager.LoadScene("InstructionScene");
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

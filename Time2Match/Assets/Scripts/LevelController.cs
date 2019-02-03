@@ -13,7 +13,6 @@ public class LevelController : MonoBehaviour {
     private static float FEEDBACK_DELAY = 0.5f;
 
     public Button botRightBtn;
-    public Text answerFeedback;
     Question q;
     public GameObject clockPrefab;
     public GameObject choicePrefab;
@@ -32,7 +31,6 @@ public class LevelController : MonoBehaviour {
         {
             ActivateInstruction();
         }
-        answerFeedback.enabled = false;
 	}
 
     private void ActivateInstruction()
@@ -68,7 +66,6 @@ public class LevelController : MonoBehaviour {
 
     public bool CheckAnswer()
     {
-        botRightBtn.gameObject.SetActive(false);
         if (matchMade.Count != clockControllers.Count)
         {
             ShowAnswer(false);
@@ -102,8 +99,8 @@ public class LevelController : MonoBehaviour {
         ShowMarks();
         StoreCorrectMappingToDict();
         //todo: show correct answer
-        if (!isCorrect) WrongAnimation();
-        else CorrectAnimation();
+        if (isCorrect)
+            CorrectAnimation();
     }
 
     private void DisableInput()
@@ -124,7 +121,7 @@ public class LevelController : MonoBehaviour {
         }
     }
     
-    private void CorrectAnimation()
+    public void CorrectAnimation()
     {
         foreach(ClockController clockC in matchMade.Keys)
         {
@@ -133,25 +130,13 @@ public class LevelController : MonoBehaviour {
             clockC.line.SetPosition(0, clockC.radioButton.position);
             clockC.line.SetPosition(1, choiceC.radioButton.position);
         }
-        answerFeedback.enabled = true;
         //answerFeedback.text = "CORRECT!";
-        answerFeedback.text = "";
         ShowMarks();
-        Invoke("reenableButton", FEEDBACK_DELAY);
     }
 
     private void reenableButton()
     {
         botRightBtn.gameObject.SetActive(true);
-    }
-
-    private void WrongAnimation()
-    {
-        
-        answerFeedback.enabled = true;
-        //answerFeedback.text = "WRONG!";
-        answerFeedback.text = "";
-        Invoke("CorrectAnimation", FEEDBACK_DELAY);
     }
 
     private void ShowMarks()

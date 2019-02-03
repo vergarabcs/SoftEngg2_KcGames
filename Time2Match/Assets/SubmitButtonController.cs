@@ -24,8 +24,23 @@ public class SubmitButtonController : MonoBehaviour {
     {
         isCorrect = lc.CheckAnswer();
         btn.onClick.RemoveAllListeners();
-        btn.onClick.AddListener(OnClick2);
+        if (isCorrect)
+        {
+            btn.onClick.AddListener(OnClick2);
+        }
+        else
+        {
+            btn.onClick.AddListener(OnClick3);
+        }
         ChangeSpriteToNext();
+    }
+
+    //onclick3 is used only if wrong answer
+    private void OnClick3()
+    {
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(OnClick2);
+        lc.CorrectAnimation();
     }
 
     private void ChangeSpriteToNext()
