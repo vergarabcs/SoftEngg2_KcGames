@@ -26,7 +26,7 @@ public class DataController : MonoBehaviour
         questionPool = qc.GenerateQuestions();
         this.restart();
         DontDestroyOnLoad(this.gameObject);
-        SceneManager.LoadScene("Menuscreen");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     internal Question getCurrentQuestion()

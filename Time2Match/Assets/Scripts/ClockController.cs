@@ -13,6 +13,7 @@ public class ClockController : MonoBehaviour {
     public bool isDrawingState;
     public GameObject redGlow;
     public GameObject greenGlow;
+    public GameObject UIHoverListener;
 
     private void Awake()
     {
@@ -52,9 +53,24 @@ public class ClockController : MonoBehaviour {
         SetHands();
     }
 
+    public bool isBlocked()
+    {
+        UIHoverListener uiListener = UIHoverListener.GetComponent<UIHoverListener>();
+        return uiListener.isUIOverride;
+    }
+
     void OnMouseDown()
     {
-        line.SetPosition(0, radioButton.position);
+        
+        if (isBlocked())
+        {
+            Debug.Log("Cancelled OnMouseDown! A UI element has override this object!");
+        }
+        else
+        {
+            //Debug.Log("Object OnMouseDown");
+            line.SetPosition(0, radioButton.position);
+        }
     }
 
     void OnMouseUp()

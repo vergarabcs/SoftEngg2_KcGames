@@ -10,6 +10,7 @@ public class SubmitButtonController : MonoBehaviour {
     Button btn;
     DataController dc;
     public Sprite nextSprite;
+    public AudioSource source;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +24,7 @@ public class SubmitButtonController : MonoBehaviour {
     void OnClick()
     {
         isCorrect = lc.CheckAnswer();
+        PlayAudio(isCorrect);
         btn.onClick.RemoveAllListeners();
         if (isCorrect)
         {
@@ -33,6 +35,14 @@ public class SubmitButtonController : MonoBehaviour {
             btn.onClick.AddListener(OnClick3);
         }
         ChangeSpriteToNext();
+    }
+
+    private void PlayAudio(bool isCorrect)
+    {
+        if (isCorrect)
+        {
+            source.Play();
+        }
     }
 
     //onclick3 is used only if wrong answer

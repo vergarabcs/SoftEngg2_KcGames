@@ -42,6 +42,7 @@ public class DrawLine : MonoBehaviour
             if (collider2D != null && collider2D.CompareTag("Clock"))
             {
                 clockController = collider2D.gameObject.GetComponent<ClockController>();
+                if (clockController.isBlocked()) return;
                 clockController.line.enabled = true;
                 clockController.isDrawingState = true;
                 line = clockController.line;

@@ -171,7 +171,7 @@ VideoPlayer:
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
 --- !u!1 &632390478
 GameObject:
@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 3b19ff7582faaab41acd5e2968634eec, type: 2}
+  particlePrefab: {fileID: 0}
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
 --- !u!4 &773722734
@@ -722,8 +723,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1545062402}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1.4060805}
+  m_LocalPosition: {x: 0, y: 0.187, z: 0}
+  m_LocalScale: {x: 2.086, y: 2.086, z: 1.4665419}
   m_Children:
   - {fileID: 1610070120}
   m_Father: {fileID: 672903498}
@@ -800,8 +801,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1610070119}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.255, z: -0.13}
-  m_LocalScale: {x: 5.4522014, y: 3.0668633, z: 1.534835}
+  m_LocalPosition: {x: 0, y: -0.222, z: -0.13}
+  m_LocalScale: {x: 4.6, y: 3.4, z: 1.5670666}
   m_Children: []
   m_Father: {fileID: 1545062403}
   m_RootOrder: 0
@@ -894,10 +895,10 @@ RectTransform:
   m_Father: {fileID: 759019423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.799, y: 0.72700006}
-  m_AnchorMax: {x: 0.875349, y: 0.8612645}
-  m_AnchoredPosition: {x: 0.1000061, y: 0.19999695}
-  m_SizeDelta: {x: -0.58999634, y: 0.41000366}
+  m_AnchorMin: {x: 0.80481386, y: 0.74700004}
+  m_AnchorMax: {x: 0.8811628, y: 0.88400006}
+  m_AnchoredPosition: {x: 0.099975586, y: 0.099990845}
+  m_SizeDelta: {x: -0.58999634, y: -0.58999634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833162338
 MonoBehaviour:
@@ -983,7 +984,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 2e2ca93b20a4a82458e8e6d30db01e9d, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

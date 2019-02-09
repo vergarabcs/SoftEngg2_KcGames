@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour {
-    private static float Y_RANGE = 3.0f; // vertically, clocks will be at -Y_RANGE to Y_RANGE
+    private static float Y_RANGE = 3.1f; // vertically, clocks will be at -Y_RANGE to Y_RANGE
     private static float CHOICE_X = 4.0f;
-    private static float QUESTION_X = -3.0f;
+    private static float QUESTION_X = -4.0f;
     private static float CHOICE_Y_DECREMENT = 2.0f*Y_RANGE/3.0f;
     private static float FEEDBACK_DELAY = 0.5f;
 
@@ -24,43 +24,105 @@ public class LevelController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         dc = GameObject.FindObjectOfType<DataController>();
-        //q = dc.getCurrentQuestion();
-        q = (new QuestionGenerator()).generateQuestion(4);
-        Test();
-        if (dc.isInstruction)
-        {
-            ActivateInstruction();
-        }
+        q = dc.getCurrentQuestion();
+        //q = (new QuestionGenerator()).generateQuestion(4);
+        InstantiatePrefabs();
 	}
 
-    private void ActivateInstruction()
+    void InstantiatePrefabs()
     {
+        InstantiateClocks();
+        InstantiateChoices();
+    }
+
+    private void InstantiateChoices()
+    {
+        float start = Y_RANGE;
+        Utility.reshuffle<DateTime>(q.clocks);
+        if (q.clocks.Length == 4)
+        {
+            for (int i = 0; i < q.clocks.Length; i++)
+            {
+                DateTime time = q.clocks[i];
+                GameObject instance = Instantiate(choicePrefab, new Vector3(CHOICE_X, start), Quaternion.identity);
+                ChoiceController cc = instance.GetComponent("ChoiceController") as ChoiceController;
+                choiceControllers.Add(cc);
+                cc.SetTime(time.Hour, time.Minute);
+                start -= CHOICE_Y_DECREMENT;
+            }
+        }
+        else
+        {
+            float decrement = (2 * Y_RANGE) / (q.clocks.Length + 1);
+            start = Y_RANGE - decrement;
+            for (int i = 0; i < q.clocks.Length; i++)
+            {
+                DateTime time = q.clocks[i];
+                GameObject instance = Instantiate(choicePrefab, new Vector3(CHOICE_X, start), Quaternion.identity);
+                ChoiceController cc = instance.GetComponent("ChoiceController") as ChoiceController;
+                choiceControllers.Add(cc);
+                cc.SetTime(time.Hour, time.Minute);
+                start -= decrement;
+            }
+        }
         
     }
 
-    void Test()
+    private void InstantiateClocks()
     {
         float start = Y_RANGE;
-        for(int i=0; i<q.clocks.Length-1; i++)
+        int analogClockCount = q.clocks.Length - 1;
+        if (q.clocks.Length - 1 == 3)
         {
-            DateTime time = q.clocks[i];
-            GameObject instance = Instantiate(clockPrefab, new Vector3(QUESTION_X, start), Quaternion.identity);
-            ClockController cc = instance.GetComponent("ClockController") as ClockController;
-            clockControllers.Add(cc);
-            cc.SetTime(time.Hour, time.Minute);
-            start -= Y_RANGE;
+            
+            for (int i = 0; i < analogClockCount ; i++)
+            {
+                DateTime time = q.clocks[i];
+                GameObject instance = Instantiate(clockPrefab, new Vector3(QUESTION_X, start), Quaternion.identity);
+                ClockController cc = instance.GetComponent("ClockController") as ClockController;
+                clockControllers.Add(cc);
+                cc.SetTime(time.Hour, time.Minute);
+                start -= Y_RANGE;
+            }
+        }else
+        {
+            float decrement = (2*Y_RANGE) / (analogClockCount + 1);
+            start = Y_RANGE - decrement;
+            if (analogClockCount == 2)
+            {
+                start = 2.0f;
+                decrement = 2*start;
+            }
+            for (int i = 0; i < analogClockCount; i++)
+            {
+                DateTime time = q.clocks[i];
+                GameObject instance = Instantiate(clockPrefab, new Vector3(QUESTION_X, start), Quaternion.identity);
+                ClockController cc = instance.GetComponent("ClockController") as ClockController;
+                clockControllers.Add(cc);
+                cc.SetTime(time.Hour, time.Minute);
+                start -= decrement;
+            }
         }
-        start = Y_RANGE;
+        ResizeClocks();
+    }
 
-        Utility.reshuffle<DateTime>(q.clocks);
-        for(int i=0; i<q.clocks.Length; i++)
+    private void ResizeClocks()
+    {
+        float scaleMultiplier = 1.2f;
+        if (clockControllers.Count == 1)
         {
-            DateTime time = q.clocks[i];
-            GameObject instance = Instantiate(choicePrefab, new Vector3(CHOICE_X, start), Quaternion.identity);
-            ChoiceController cc = instance.GetComponent("ChoiceController") as ChoiceController;
-            choiceControllers.Add(cc);
-            cc.SetTime(time.Hour, time.Minute);
-            start -= CHOICE_Y_DECREMENT;
+            scaleMultiplier = 2.0f;
+        }
+        else if(clockControllers.Count==2)
+        {
+            scaleMultiplier = 1.5f;
+        }
+        foreach (ClockController cc in clockControllers)
+        {
+            cc.transform.localScale *= scaleMultiplier;
+            Transform rBtn = cc.transform.GetChild(2);
+            rBtn.localScale /= scaleMultiplier;
+            print(rBtn.gameObject.name);
         }
     }
 
