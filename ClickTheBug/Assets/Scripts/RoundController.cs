@@ -78,7 +78,7 @@ public class RoundController : MonoBehaviour {
             float y = Random.RandomRange(-1.0f, 1.0f);
             GameObject curr = gObjects[i];
             Rigidbody2D rb2d = curr.GetComponent<Rigidbody2D>();
-            rb2d.AddForce(new Vector2(x, y));
+            rb2d.AddForce(new Vector2(x, y) * 50.0f);
         }
     }
 

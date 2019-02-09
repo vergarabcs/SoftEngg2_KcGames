@@ -14,7 +14,7 @@ public class LevelController : MonoBehaviour {
         dc = GameObject.FindObjectOfType<DataController>();
         q = dc.getCurrentQuestion();
         //q = (new QuestionGenerator()).generateQuestion(4);
-        answerFeedback.enabled = false;
+        
     }
 
     void SetTextTime(int hour, int minute)

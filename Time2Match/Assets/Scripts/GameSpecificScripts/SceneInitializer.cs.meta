@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bc86b1dd47d6c674cb1a296eac748f61
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - choicePrefab: {fileID: 1682532110328808, guid: e026174f30920fb499230747ef68d052,
+      type: 2}
+  - clockPrefab: {fileID: 1536610985508130, guid: d4b1124e6cd59c346b9d3e084e7c2598,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

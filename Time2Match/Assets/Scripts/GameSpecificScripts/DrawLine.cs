@@ -65,14 +65,14 @@ public class DrawLine : MonoBehaviour
                 ChoiceController cc = collider2D.gameObject.GetComponent<ChoiceController>();
                 line.SetPosition(1, cc.radioButton.position);
                 clockController.isDrawingState = false;
-                lc.Match(cc, clockController);
+                lc.answerChecker.Match(cc, clockController);
             }
             else
             {
                 //disable currently drawing line
                 line.enabled = false;
                 clockController.isDrawingState = false;
-                lc.unMatch(clockController);
+                lc.answerChecker.unMatch(clockController);
             }
         }
     }

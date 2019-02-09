@@ -26,13 +26,13 @@ public class SubmitButtonController : MonoBehaviour {
         isCorrect = lc.CheckAnswer();
         PlayAudio(isCorrect);
         btn.onClick.RemoveAllListeners();
-        if (isCorrect)
+        if (isCorrect)  
         {
-            btn.onClick.AddListener(OnClick2);
+            btn.onClick.AddListener(OnClickNextLevel);
         }
         else
         {
-            btn.onClick.AddListener(OnClick3);
+            btn.onClick.AddListener(OnClickShowCorrect);
         }
         ChangeSpriteToNext();
     }
@@ -46,11 +46,11 @@ public class SubmitButtonController : MonoBehaviour {
     }
 
     //onclick3 is used only if wrong answer
-    private void OnClick3()
+    private void OnClickShowCorrect()
     {
         btn.onClick.RemoveAllListeners();
-        btn.onClick.AddListener(OnClick2);
-        lc.CorrectAnimation();
+        btn.onClick.AddListener(OnClickNextLevel);
+        lc.answerChecker.ShowCorrectAnswer();
     }
 
     private void ChangeSpriteToNext()
@@ -59,7 +59,7 @@ public class SubmitButtonController : MonoBehaviour {
         img.sprite = nextSprite;
     }
 
-    void OnClick2()
+    void OnClickNextLevel()
     {
         print("onclick2:" + isCorrect);
         dc.DidAnswer(isCorrect);
