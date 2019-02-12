@@ -768,6 +768,16 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 61610799529394166, guid: d4b1124e6cd59c346b9d3e084e7c2598,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61079623898569270, guid: d4b1124e6cd59c346b9d3e084e7c2598,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4b1124e6cd59c346b9d3e084e7c2598, type: 2}
   m_IsPrefabAsset: 0
